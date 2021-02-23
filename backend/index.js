@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 dotenv.config();
 const app = express();
 
+app.use(express.json()); 
+
 //routes
 const userRouter = require('./src/routes/userRouter');
 const adminRouter = require('./src/routes/adminRouter');
@@ -24,5 +26,5 @@ app.use('/api', userRouter);
 app.use('/api', adminRouter);
 
 app.listen(process.env.PORT, ()=> {
-    console.log(` ✅ Server is running on localhost:${process.env.PORT}`)
+    console.log(` ✅ Server is running on http://localhost:${process.env.PORT}`)
 })
