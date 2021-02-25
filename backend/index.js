@@ -10,6 +10,7 @@ app.use(express.json());
 const userRouter = require('./src/routes/userRouter');
 const adminRouter = require('./src/routes/adminRouter');
 const categoryRouter = require('./src/routes/categoryRouter');
+const productRouter = require('./src/routes/productRouter');
 
 // mongodb Connection
 mongoose.connect(
@@ -26,6 +27,7 @@ mongoose.connect(
 app.use('/api', userRouter);
 app.use('/api', adminRouter);
 app.use('/api', categoryRouter);
+app.use('/api', productRouter);
 
 app.listen(process.env.PORT, ()=> {
     console.log(` ✅ Server is running on http://localhost:${process.env.PORT}`)
