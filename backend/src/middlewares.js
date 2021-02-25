@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-exports.requireSignin = (req, res, next) => {
+exports.requireSignin = async (req, res, next) => {
     if(req.header.authorization){
         console.log(" require Signin middlware");
         console.log(req.header);
@@ -10,6 +10,7 @@ exports.requireSignin = (req, res, next) => {
     } else {
         return res.status(400).json({ message: 'Authorization required'})
     }
+    next();
 }
 
 exports.userMiddleware = (req, res, next) => {
