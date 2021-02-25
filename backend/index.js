@@ -20,6 +20,7 @@ mongoose.connect(
         useNewUrlParser: true, 
         useUnifiedTopology: true,
         useCreateIndex: true
+        // useFindAndModify: false 
     }
 ).then(() => {
     console.log(' ✅ Database connected')
@@ -29,7 +30,7 @@ app.use('/api', userRouter);
 app.use('/api', adminRouter);
 app.use('/api', categoryRouter);
 app.use('/api', productRouter);
-app.use('api', cartRouter);
+app.use('/api', cartRouter);
 
 app.listen(process.env.PORT, ()=> {
     console.log(` ✅ Server is running on http://localhost:${process.env.PORT}`)
