@@ -1,13 +1,41 @@
 import React from "react";
 import {
   Navbar,
-  Nav
+  Nav,
+  Container
 } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = (props) => {
+  const auth = useSelector(state => state.auth);
+
+  const renderLoggedInLinks = () => {
+    return (
+      <Nav>
+        <li className="nav-item">
+          <span className="nav-link">Signout</span>
+        </li>
+      </Nav>
+    )
+  }
+
+  const renderNonLoggedInLinks = () => {
+    return (
+        <Nav>
+          <li className="nav-item">
+            <NavLink to="signin" className="nav-link">SignIn</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="signup" className="nav-link">SignUp</NavLink>
+          </li>
+        </Nav>
+    )
+  }
+
   return (
-    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark" style={{ zIndex: 1 }}>
+      <Container fluid>
       <Link to="/" className="navbar-brand">Ymon - admin</Link>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -24,15 +52,9 @@ const Header = (props) => {
             </NavDropdown.Item>
           </NavDropdown> */}
         </Nav>
-        <Nav>
-          <li className="nav-item">
-            <NavLink to="signin" className="nav-link">SignIn</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="signup" className="nav-link">SignUp</NavLink>
-          </li>
-        </Nav>
+        {auth.authenticate ? renderLoggedInLinks(): renderNonLoggedInLinks()}
       </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 };
