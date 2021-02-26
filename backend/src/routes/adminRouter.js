@@ -1,8 +1,10 @@
 const express = require('express');
-const { signin, signup, requireSignin } = require('../controllers/adminController');
+const { signin, signup, signout } = require('../controllers/adminController');
+const { requireSignin } = require('../middlewares');
 const router = express.Router();
 
 router.post('/admin/signin', signin);
 router.post('/admin/signup', signup);
+router.post('/admin/signout', requireSignin, signout);
 
 module.exports = router;
