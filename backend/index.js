@@ -1,10 +1,12 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const path = require('path');
 dotenv.config();
 const app = express();
 
 app.use(express.json()); 
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
 
 //routes
 const userRouter = require('./src/routes/userRouter');
