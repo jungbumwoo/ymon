@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from "./components/HOC/privateRoute";
 import Home from "../src/container/Home/Home.js";
 import Signin from "../src/container/Signin/Signin.js";
 import Signup from "../src/container/Signup/Signup.js";
@@ -9,7 +10,7 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <PrivateRoute exact path="/" component={Home}/>
           <Route path="/signin" component={Signin}/>
           <Route path="/signup" component={Signup}/>
         </Switch>

@@ -3,12 +3,15 @@ import Layout from "../../components/Layout/Layout/Layout";
 import Input from "../../components/UI/Input";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { login } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom';
 
 const Signin = (props) => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ error, setError ] = useState('');
+    const auth = useSelector(state => state.auth);
+
     const dispatch = useDispatch();
     const userLogin = (e) => {
         e.preventDefault();
@@ -18,6 +21,11 @@ const Signin = (props) => {
         }
         dispatch(login(user));
     }
+
+    if(auth.authenticate){
+        return <Redirect to={'/'} />
+    }
+    
     return(
         <Layout>
             <Container>
