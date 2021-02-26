@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 dotenv.config();
 const app = express();
+const cors = require('cors');
 
 app.use(express.json()); 
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
@@ -28,6 +29,8 @@ mongoose.connect(
     console.log(' ✅ Database connected')
 })
 
+
+app.use(cors());
 app.use('/api', userRouter);
 app.use('/api', adminRouter);
 app.use('/api', categoryRouter);
