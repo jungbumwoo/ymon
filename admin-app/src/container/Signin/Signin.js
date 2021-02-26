@@ -3,22 +3,24 @@ import Layout from "../../components/Layout/Layout/Layout";
 import Input from "../../components/UI/Input";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { login } from "../../actions";
+import { useDispatch } from "react-redux";
 
 const Signin = (props) => {
+    const dispatch = useDispatch();
     const userLogin = (e) => {
         e.preventDefault();
         const user = {
             email: "jung@baver.com",
             password: "123123"
         }
-        login(user);
+        dispatch(login(user));
     }
     return(
         <Layout>
             <Container>
                 <Row style={{ marginTop: "3rem"}}>
                     <Col md={{span: 6, offset: 3}}>
-                        <Form onSubmit={() => {userLogin()}}>
+                        <Form onSubmit={userLogin}>
                             <Input 
                                 label="Email"
                                 placeholder="Eamil"
