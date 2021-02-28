@@ -15,11 +15,23 @@ export default (state = initState, action ) => {
             }
             break;
     
-        default:
+        case categoryConstants.ADD_NEW_CATEGORY_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+        case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
             state = {
                 ...initState
             }
             break;
     }
-    return state
+    return state;
 }
