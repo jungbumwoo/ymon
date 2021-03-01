@@ -1,7 +1,7 @@
 import { categoryConstants } from "../actions/constants.js";
 
 const initState = {
-    categories: ['men', 'women'],
+    categories: [],
     loading: false,
     error: null
 };

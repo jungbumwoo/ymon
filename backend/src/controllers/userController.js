@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res) => {
     User.findOne({ email: req.body.email})

@@ -33,14 +33,34 @@ const Products = (props) => {
         setShow(false);
     }
 
+    const createCategoryList = (categories, options =[]) => {
+        for(let cat of categories){
+            options.push({
+                name: cat.name,
+                value: cat._id
+            })
+            if(cat.children.length > 0){
+                createCategoryList(cat.children, options)
+            }
+        }
+        return options
+    }
+
     const handleShow = () => setShow(true);
 
+    const handleProductPictures = (e) => {
+        setProductPicture([
+            ...productPictures,
+            e.target.files[0]
+        ])
+    };
+
     return(
-        <Layout children={"whf"}>
+        <Layout>
             <Container>
                 <Row>
                     <Col md={12}>
-                        <div>
+                        <div style={{ display:'flex', justifyContent: 'space-around' }}>
                             <h1>Products</h1>
                             <button onClick={handleShow}>Add</button>
                         </div>
@@ -51,6 +71,54 @@ const Products = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Add New Category</Modal.Title>
                 </Modal.Header>
+                <Modal.Body>
+                    <Input
+                        label="Name"
+                        value={name}
+                        placeholder={`Category Name`}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <Input
+                        label="Quantity"
+                        value={quantity}
+                        placeholder={`Quantity`}
+                        onChange={(e) => setQuantity(e.target.value)}
+                    />
+                    <Input
+                        label="Price"
+                        value={price}
+                        placeholder={`Price`}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <Input
+                        label="Description"
+                        value={description}
+                        placeholder={`Description Name`}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <select
+                        className="form-control"
+                        value={categoryId}
+                        onChange={(e) => setCategoryId(e.target.value)}>
+                        <options>select category</options>
+                        {
+                            createCategoryList(category.categories).map(option => 
+                                <option key={option.value} value={option.value}>{option.name}</option>)
+                        }
+                    </select>
+
+                    {
+                        productPictures.length > 0 ?
+                        productPictures.map((pic, index) => <div key={index}>{pic.name}</div>) : null
+                    }
+
+                    <input type="file" name="productPicture" onChange={handleProductPictures} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </Layout>
     )

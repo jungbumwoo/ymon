@@ -6,7 +6,9 @@ dotenv.config();
 const app = express();
 const cors = require('cors');
 
+
 app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
 
 //routes

@@ -1,13 +1,13 @@
 const Category = require('../models/categoryModel');
 const slugify = require('slugify');
 
-function createCategories(categories, parendId = null){
+function createCategories(categories, parentId = null){
     const categoryList = [];
     let category;
     if (parentId == null) {
-        category = categories.filter(cat => cat.parendId == undefined);
+        category = categories.filter(cat => cat.parentId == undefined);
     } else {
-        category = categories.filter(cat => cat.parentId == parendId);
+        category = categories.filter(cat => cat.parentId == parentId);
     }
     for(let cate of category) {
         categoryList.push({
@@ -31,8 +31,8 @@ exports.addCategory = (req, res) => {
         categoryObj.categoryImage = process.env.API + '/public/' + req.file.filename;
     }
 
-    if(req.body.parendId){
-        categoryObj.parendId = req.body.parendId
+    if(req.body.parentId){
+        categoryObj.parentId = req.body.parentId
     }
 
     const cat = new Category(categoryObj);
