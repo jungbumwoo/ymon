@@ -5,7 +5,7 @@ import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
 import { categoryConstants } from '../../actions/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../reducers/product.reducer';
+import { addProduct } from '../../actions/product.action';
 
 const Products = (props) => {
     const [name, setName] = useState('');
@@ -16,6 +16,7 @@ const Products = (props) => {
     const [productPictures, setProductPicture] = useState([]);
     const [show, setShow] = useState(false);
     const category = useSelector(state => state.category);
+    const product = useSelector(state => state.product);
     const dispatch = useDispatch();
 
     const handleClose = () => {
@@ -71,15 +72,19 @@ const Products = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
+                    {
+                        product.products.length > 0 ?
+                            product.products.map(product =>
+                                <tr key={product._id}>
+                                    <td>2</td>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.quantity}</td>
+                                    <td>{product.description}</td>
+                                    <td>---</td>
+                                </tr>    
+                            ) : null
+                    }
                 </tbody>
             </Table>
         )

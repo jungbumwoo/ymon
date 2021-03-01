@@ -1,15 +1,19 @@
-import axiosInstance from "../helpers/axios";
+import { productConstants } from "../actions/constants.js";
 
 const initialState = {
     products: []
 };
 
-export const addProduct = form => {
-    return async dispatch => {
-        const res = await axiosInstance.post('product/create', form);
-    }
-}
-
 export default (state = initialState, action) => {
-    return initialState
+    switch (action.type) {
+        case productConstants.GET_ALL_PRODUCTS_SUCCESS:
+            state = {
+                ...state,
+                products: action.payload.products
+            }
+            break;
+        default:
+            break;
+    }
+    return state;
 }
