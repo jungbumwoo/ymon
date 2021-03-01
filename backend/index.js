@@ -17,6 +17,7 @@ const adminRouter = require('./src/routes/adminRouter');
 const categoryRouter = require('./src/routes/categoryRouter');
 const productRouter = require('./src/routes/productRouter');
 const cartRouter = require('./src/routes/cartRouter');
+const initialDataRouter = require('./src/routes/admin/initialData.js');
 
 // mongodb Connection
 mongoose.connect(
@@ -38,6 +39,7 @@ app.use('/api', adminRouter);
 app.use('/api', categoryRouter);
 app.use('/api', productRouter);
 app.use('/api', cartRouter);
+app.use('/api', initialDataRouter);
 
 app.listen(process.env.PORT, ()=> {
     console.log(` ✅ Server is running on http://localhost:${process.env.PORT}`)
