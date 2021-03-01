@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../Header/Header.js";
 import { Container, Row, Col } from "react-bootstrap";
+import './style.css';
 
 const Layout = (props) => {
     return (
@@ -19,6 +20,7 @@ const Layout = (props) => {
                                     <li><NavLink to={'/orders'}>Orders</NavLink></li>
                                 </ul>
                             </Col>
+                            <Col md={10} style={{ marginLeft: `auto`, paddingTop: '3.6rem'}}>{props.children}</Col>
                         </Row>
                     </Container>
                     :

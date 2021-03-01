@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { isUserLoggedIn } from "./actions";
+import { getAllCategory, isUserLoggedIn } from "./actions";
 import PrivateRoute from "./components/HOC/privateRoute";
 import Home from "../src/container/Home/Home.js";
 import Orders from "./container/Orders/Orders.js"
@@ -18,7 +18,7 @@ function App() {
     if(!auth.authenticate){
       dispatch(isUserLoggedIn());
     }
-    dispatch(isUserLoggedIn());
+    dispatch(getAllCategory());
   }, [])
   
   return (
