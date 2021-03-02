@@ -37,8 +37,32 @@
     left: 0;
     right: 0;
     display: none;
+    border: 0.06rem solid #cecece;
 }
 
 .menuHeader > ul > li:hover ul{
     display: block;
-} 
+}
+
+.menuHeader > ul > li > ul > li {
+    margin: 0 1.4rem;
+    min-width: 14rem;
+}
+
+.menuHeader > ul > li > ul > li {
+    float: left;
+}
+
+.menuHeader > ul > li > ul > li > a{
+    font-weight: bold;
+    display: block;
+    font-size: 0.8rem;
+}
+
+.menuHeader > ul > li > ul > li a{
+    padding: 0.3rem;
+    display: block;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: #707070;
+}
