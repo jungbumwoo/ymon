@@ -22,7 +22,7 @@ exports.signup = (req, res) => {
             email,
             password,
             hash_password,
-            username: Math.random().toString,
+            username: shortid.generate(),
             role: 'admin'
         });
 

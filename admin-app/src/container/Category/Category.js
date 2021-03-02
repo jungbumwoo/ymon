@@ -55,7 +55,7 @@ const Category = (props) => {
     }
 
     return(
-        <Layout>
+        <Layout sidebar>
             <Container>
                 <Row>
                     <Col md={12}>
