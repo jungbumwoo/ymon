@@ -1,7 +1,7 @@
-import axiosInstance from "../helpers/axios";
+import axios from "../helpers/axios";
 
 export const addProduct = form => {
     return async dispatch => {
-        const res = await axiosInstance.post('product/create', form);
+        const res = await axios.post('product/create', form);
     }
 }

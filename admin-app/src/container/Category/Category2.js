@@ -6,7 +6,7 @@ import {
     getAllCategory,
     addCategory,
     updateCategories,
-    deleteCategories as deleteCategoriesAction
+    deleteCategories
 } from "../../actions";
 import Input from "../../components/UI/Input.js";
 import Modal from "../../components/UI/Modal.js";
@@ -25,6 +25,7 @@ const Category = (props) => {
     const [ categoryName, setCategoryName ] = useState('');
     const [ categoryImage, setCategoryImage ] = useState('');
     const [ parentCategoryId, setParentCategoryId ] = useState('');
+    const [ deleteCategoryModal, setDeleteCategoryModal ] = useState(false);
     const [ updateCategoryModal, setUpdateCategoryModal ] = useState(false);
     const [ show, setShow ] = useState(false);
     
@@ -33,6 +34,7 @@ const Category = (props) => {
     const [ checkedArray, setCheckedArray ] = useState([]);
     const [ expandedArray, setExpandedArray ] = useState([]);
 
+    // [] 안에 일자배열
     const createCategoryList = (categories, bucket = [] ) => {
         for(let dog of categories) {
             bucket.push({ value: dog._id, name: dog.name, parentId: dog.parentId });
@@ -67,6 +69,21 @@ const Category = (props) => {
             const updatedExpandedArray = expandedArray.map((item, _index) => index == _index ? {...item, [key]: value } : item);
             setExpandedArray(updatedExpandedArray); 
         }
+    }
+    
+    // tree shaped
+    const renderCategories = (categories) => {
+        let mycategories = [];
+        for (let category of categories) {
+            mycategories.push(
+                {
+                    label: category.name,
+                    value: category._id,
+                    children: category.children.length > 0 && renderCategories(category.children)
+                }
+            )
+        }
+        return mycategories;
     }
 
     const renderAddCategoryModal = () => {
@@ -223,7 +240,21 @@ const Category = (props) => {
     }
 
     const deleteCategory = () => {
+        updateCheckedAndExpandedCategories();
+        setDeleteCategoryModal(true);
+    }
 
+    const deleteCategories = () => {
+        const checkedIdsArray = checkedArray.map((item, index) => ({_id: item.value}));
+        const expandedIdsArray = expandedArray.map((item, index) => ({_id: item.value}));
+        const idsArray = expandedIdsArray.concat(checkedIdsArray);
+        dispatch(deleteCategories(idsArray))
+        .then(result => {
+            if(result){
+                dispatch(getAllCategory())
+                setDeleteCategoryModal(false)
+            }
+        })
     }
 
     const renderDeleteCategoryModal = () => {
@@ -231,8 +262,26 @@ const Category = (props) => {
             <Modal
                 modalTitle="Confirm"
                 show={deleteCategoryModal}
+                handleClose={() => setDeleteCategoryModal(false)}
+                buttons={[
+                    {
+                        label:'No',
+                        color: 'primary',
+                        onClick: () => {
+                            alert('no');
+                        }
+                    },
+                    {
+                        label: 'Yes',
+                        color: 'danger',
+                        onClick: deleteCategories
+                    }
+                ]}
             >
-                
+                <h5>Expanded</h5>
+                { expandedArray.map((item, index) => <span key={index}>{item.name}</span>) }
+                <h5>Checked</h5>
+                { checkedArray.map((item, index) => <span ket={index}>{item.name}</span>) }
             </Modal>
         )
     }
@@ -248,6 +297,23 @@ const Category = (props) => {
                     </Col>
                 </Row>
                 <Row>
+                    <Col md={12}>
+                        <CheckboxTree 
+                            nodes={renderCategories(category.categories)}
+                            checked={checked}
+                            expanded={expanded}
+                            onCheck={checked => setChecked(checked)}
+                            onExpand={{
+                                check: <IoIosCheckbox />,
+                                uncheck: <IoIosCheckboxOutline />,
+                                halfCheck: <IoIosCheckboxOutline />,
+                                expandClose: <IoIosArrowForward />,
+                                expandOpen: <IoIosArrowDown />
+                            }}
+                        />
+                    </Col>
+                </Row>
+                <Row>
                     <Col>
                         <button onClick={deleteCategory}>Delete</button>
                         <button onClick={updateCategory}>Edit</button>
@@ -260,3 +326,5 @@ const Category = (props) => {
         </Layout>
     )
 }
+
+export default Category;
